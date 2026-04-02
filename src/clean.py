@@ -46,8 +46,7 @@ def _normalize_colname(col: str) -> str:
 
 
 def _drop_pii(df: pd.DataFrame) -> Tuple[pd.DataFrame, List[str]]:
-    normalized = {_normalize_colname(c): c for c in df.columns}
-    drop = [original for norm, original in normalized.items() if norm in PII_CANDIDATES]
+    drop = [col for col in df.columns if _normalize_colname(col) in PII_CANDIDATES]
     return df.drop(columns=drop, errors="ignore"), drop
 
 
